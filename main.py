@@ -1,3 +1,8 @@
+#Victor Luiz 
+#Gabriel Alexander
+#Gustavo Sales
+#Iori Souza Leite
+
 def LerTXT(txt):
     with open(txt, 'r') as arquivo:
         conteudo = arquivo.read()
@@ -11,7 +16,7 @@ def Compactar(arquivoEntrada, arquivoSaida):
 
     texto = LerTXT(arquivoEntrada) #Lê o arquivo de entrada e o armazena em uma variavel
 
-    conteudoComprimido = "" 
+    conteudoComprimido = ""
     contador = 1 
     caractereAnterior = texto[0] 
 
@@ -70,13 +75,7 @@ def Descompactar(arquivoEntrada, arquivoSaida):
 def Test():
 
     Compactar("teste1.txt", "_teste1.txt")
-    Compactar("teste2.txt", "_teste2.txt")
-    Compactar("teste3.txt", "_teste3.txt")
-    Compactar("teste4.txt", "_teste4.txt")
 
-    Descompactar("_teste1.txt", "#teste1.txt")
-    Descompactar("_teste2.txt", "#teste2.txt")
-    Descompactar("_teste3.txt", "#teste3.txt")
-    Descompactar("_teste4.txt", "#teste4.txt")
+    Descompactar("_teste1.txt", "_teste2.txt")
 
 Test()
