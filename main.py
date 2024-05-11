@@ -1,81 +1,96 @@
-#Victor Luiz 
-#Gabriel Alexander
-#Gustavo Sales
-#Iori Souza Leite
+from algoritmos import *
+import os
 
-def LerTXT(txt):
-    with open(txt, 'r') as arquivo:
-        conteudo = arquivo.read()
-    return conteudo
+rodando = True
+while rodando:
+    os.system("cls" if os.name == "nt" else "clear")
 
-def EscreverTXT(conteudo, nome):
-    with open(nome, 'w') as arquivo:
-        arquivo.write(conteudo)
+    print("-=-=-=-=-=-=- SUPER DES/COM/PACTADOR 3000 -=-=-=-=-=-=-")
+    print("")
+    print("Olá! Bem vindo ao compactador / descompactador de arquivos de texto!")
+    print("")
+    print("Selecione uma opção:")
+    print("1 - Compactar")
+    print("2 - Descompactar")
+    print("3 - Testar")
+    print("4 - Créditos")
+    print("5 - Sair")
+    print("")
+    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    opcao = input("Digite a opção desejada: ")
+    while opcao != "1" and opcao != "2" and opcao != "3" and opcao != "4" and opcao != "5":
+        print("Opção inválida! Tente novamente.")
+        opcao = input("Digite a opção desejada: ")
 
-def Compactar(arquivoEntrada, arquivoSaida):
+    if opcao == "1":
+        os.system("cls" if os.name == "nt" else "clear")
 
-    texto = LerTXT(arquivoEntrada) #Lê o arquivo de entrada e o armazena em uma variavel
+        print("-=-=-=-=-=-=- COMPACTADOR -=-=-=-=-=-=-")
+        print("")
+        print("Para compactar varios arquivos de uma vez, digite o nome dos arquivos separados por espaço.")
+        arquivosEntrada = input("Digite o nome dos arquivos de entrada: ")
+        
+        arquivosEntrada = arquivosEntrada.split(" ")
+        for arquivo in arquivosEntrada:
+            extensao = arquivo.split(".")
+            arquivoSaida = extensao[0] + "_compactado" + "." + extensao[1]
+            texto = TransformarTXTParaString(arquivo)
+            conteudoComprimido = Compactar(texto)
+            TransformarStringParaTXT(conteudoComprimido, arquivoSaida)
+        print("")
+        print("Arquivos compactados com sucesso!")
+        print("")
+        input("Pressione qualquer tecla para voltar ao menu principal...")
 
-    conteudoComprimido = ""
-    contador = 1 
-    caractereAnterior = texto[0] 
+    elif opcao == "2":
+        os.system("cls" if os.name == "nt" else "clear")
 
-    for i in range(1, len(texto)): 
-        if texto[i] == caractereAnterior: 
-            contador += 1
+        print("-=-=-=-=-=-=- DESCOMPACTADOR -=-=-=-=-=-=-")
+        print("")
+        print("Para descompactar varios arquivos de uma vez, digite o nome dos arquivos separados por espaço.")
+        arquivosEntrada = input("Digite o nome dos arquivos de entrada: ")
+        
+        arquivosEntrada = arquivosEntrada.split(" ")
+        for arquivo in arquivosEntrada:
+            extensao = arquivo.split(".")
+            arquivoSaida = extensao[0] + "_descompactado" + "." + extensao[1]
+            texto = TransformarTXTParaString(arquivo)
+            conteudoDescomprimido = Descompactar(texto)
+            TransformarStringParaTXT(conteudoDescomprimido, arquivoSaida)
+        print("")
+        print("Arquivos descompactados com sucesso!")
+        print("")
+        input("Pressione qualquer tecla para voltar ao menu principal...")
 
-        else:  
-            if contador <= 4:
-                conteudoComprimido += caractereAnterior * contador
 
-            else:
-                conteudoComprimido += '#' + str(contador) + caractereAnterior + '|'
+    elif opcao == "3":
+        os.system("cls" if os.name == "nt" else "clear")
 
-            contador = 1
-            caractereAnterior = texto[i]
-            
-    if contador <= 4:
-        conteudoComprimido += caractereAnterior * contador
-
-    else:
-        conteudoComprimido += '#' + str(contador) + caractereAnterior + '|'
-
-    EscreverTXT(conteudoComprimido, arquivoSaida) #Cria o arquivo de saida e o preenche com o texto comprimido
-    
-def Descompactar(arquivoEntrada, arquivoSaida):
-
-    texto = LerTXT(arquivoEntrada)
-
-    conteudoDescomprimido = ""
-    i = 0
-
-    while i < len(texto):
-        if texto[i] == '#':
-            for j in range(i, len(texto)):
-                if texto[j] == '|':
-                    print(texto[j-2])
-                    contador = int(texto[i+1:j-1])
-                    caractere = texto[j-1]
-                    conteudoDescomprimido += caractere * contador
-                    i = j + 1
-                    break
+        print("-=-=-=-=-=-=- TESTADOR -=-=-=-=-=-=-")
+        print("")
+        arquivoEntrada = TransformarTXTParaString(input("Digite o nome do arquivo de entrada: "))
+        arquivoSaida = TransformarTXTParaString(input("Digite o nome do arquivo de saída: "))
+        print("Testando...")
+        if Testar(arquivoEntrada, arquivoSaida):
+            print("Compactação e descompactação bem sucedidas!")
         else:
-            conteudoDescomprimido += texto[i]
-            i += 1
+            print("Falhou :c")
+        print("")
+        input("Pressione qualquer tecla para voltar ao menu principal...")
 
-    EscreverTXT(conteudoDescomprimido, arquivoSaida)
+    elif opcao == "4":
+        os.system("cls" if os.name == "nt" else "clear")
 
+        print("-=-=-=-=-=-=- CRÉDITOS -=-=-=-=-=-=-")
+        print("")
+        print("Desenvolvido por:")
+        print("Gabriel Alexander Pinheiro Bravo")
+        print("https//github.com/xandeco024")
+        print("")
+        print("Te desejo um ótimo dia!")
+        print("")
+        input("Pressione qualquer tecla para voltar ao menu principal...")
 
-#precisa ler um TXT CONFERE
-# e devolver o TXT comprimido CONFERE
-#  e descomprimido. CONFERE
-# E COLOCAR UMA FLAG CONFERE
-# nao compactar o que ja ta compactado
-
-def Test():
-
-    Compactar("teste1.txt", "_teste1.txt")
-
-    Descompactar("_teste1.txt", "_teste2.txt")
-
-Test()
+    elif opcao == "5":
+        rodando = False
+        print("Até mais!")

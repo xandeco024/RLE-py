@@ -1,0 +1,1 @@
+Para utilizar o descompactador, basta abrir o arquivo "main.exe" dentro da pasta "DESCOMPACTADOR"
