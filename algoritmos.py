@@ -63,6 +63,39 @@ def Compactar(conteudo):
 
     return conteudoComprimido #Finalmente, retorna o texto comprimido, para que possa ser inserido em um arquivo :)
 
+def RemoverEspacoVazio(conteudo):
+    conteudoComprimido = ""
+    repeticoes = 1
+
+    caractereAnterior = conteudo[0]
+
+    for caractereIndice in range(1, len(conteudo)):
+        if conteudo[caractereIndice] == " ": #Se o caractere atual for igual a um espaço, então é necessário comprimir.
+            repeticoes += 1
+
+        else:
+            if repeticoes <= 4:
+                conteudoComprimido += caractereAnterior * repeticoes
+
+            else:
+                if repeticoes <= 9:
+                    conteudoComprimido += "#0" + str(repeticoes) + caractereAnterior
+                else:
+                    conteudoComprimido += "#" + str(repeticoes) + caractereAnterior
+
+            repeticoes = 1
+            caractereAnterior = conteudo[caractereIndice]
+
+    if repeticoes <= 4:
+        conteudoComprimido += caractereAnterior * repeticoes
+    else:
+        if repeticoes <= 9:
+            conteudoComprimido += "#0" + str(repeticoes) + caractereAnterior
+        else:
+            conteudoComprimido += "#" + str(repeticoes) + caractereAnterior
+
+    return conteudoComprimido
+
 def Descompactar(conteudo): 
     if len(conteudo) == 0: #Se o texto estiver vazio, não é necessário descomprimir, então retorna o texto original.
         return conteudo
